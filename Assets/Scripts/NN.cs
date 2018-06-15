@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using System.IO;
+using System.Globalization;
 
 public class NN : MonoBehaviour {
     [SerializeField] Sprite Img;
@@ -11,8 +13,15 @@ public class NN : MonoBehaviour {
     List<float> imgInput = new List<float>();
     List<float> initWeights = new List<float>();
     StreamWriter writer;
+    StreamWriter Report;
     StreamReader reader;
 
+    int count = 0;
+
+    List<Neuron> uno = new List<Neuron>();
+    List<Neuron> dos = new List<Neuron>();
+    List<Neuron> tres = new List<Neuron>();
+    List<Neuron> cuatro = new List<Neuron>();
 
     private void Start()
     {
@@ -45,6 +54,50 @@ public class NN : MonoBehaviour {
             }
         }
 
+        
+        string repPath = "Assets/Resources/Report.txt";
+        Report = new StreamWriter(repPath, true);
 
+        foreach (float n in imgInput)
+        {
+            uno.Add(new Perceptron(imgInput, initWeights, 0, Bias));
+            uno[imgInput.IndexOf(n)].Layer = 1;
+            uno[imgInput.IndexOf(n)].ID = count;
+            uno[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            count++;
+        }
+        foreach (float n in imgInput)
+        {
+            dos.Add(new ReLu(uno, initWeights, 0, Bias));
+            dos[imgInput.IndexOf(n)].Layer = 2;
+            dos[imgInput.IndexOf(n)].ID = count;
+            dos[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            count++;
+        }
+        foreach (float n in imgInput)
+        {
+            dos.Add(new Sigmoid(dos, initWeights, 0, Bias));
+            dos[imgInput.IndexOf(n)].Layer = 3;
+            dos[imgInput.IndexOf(n)].ID = count;
+            dos[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            count++;
+        }
+        foreach (float n in imgInput)
+        {
+            dos.Add(new softMax(dos, initWeights, 0, Bias));
+            dos[imgInput.IndexOf(n)].Layer = 3;
+            dos[imgInput.IndexOf(n)].ID = count;
+            dos[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            count++;
+        }
+
+
+
+        Report.Close();
+        AssetDatabase.RenameAsset(repPath,( "Report_" + System.DateTime.Now.ToUniversalTime() + ".txt"));
     }
 }

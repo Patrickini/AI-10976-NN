@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Perceptron : Neuron {
 
-    public void operation()
+    public override void operation()
     {
         if(inputList.Count == weightList.Count)
         {
             foreach(float i in inputList)
             {
-                x += i * weightList.IndexOf(i);
+                this.x += i * weightList.IndexOf(i);
             }
         }
         else
@@ -19,5 +19,22 @@ public class Perceptron : Neuron {
 
         }
         Activate(this.x, this.Bias);
+    }
+
+    public override string report()
+    {
+        return base.report();
+    }
+    public Perceptron() : base()
+    {
+
+    }
+    public Perceptron(List<float> X, List<float> W, float T, float B) : base(X, W, T, B)
+    {
+        
+    }
+    public Perceptron(List<Neuron> Prev, List<float> W, float T, float B) : base(Prev, W, T, B)
+    {
+
     }
 }

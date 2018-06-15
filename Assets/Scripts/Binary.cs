@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Binary : Neuron {
 
-    public void operation()
+    public override void operation()
     {
         float temp;
         if (inputList.Count == weightList.Count)
@@ -21,5 +21,21 @@ public class Binary : Neuron {
 
         }
         Activate(this.x, this.Bias);
+    }
+    public override string report()
+    {
+        return base.report();
+    }
+    public Binary() : base()
+    {
+
+    }
+    public Binary(List<float> X, List<float> W, float T, float B) : base(X, W, T, B)
+    {
+
+    }
+    public Binary(List<Neuron> Prev, List<float> W, float T, float B) : base(Prev, W, T, B)
+    {
+
     }
 }
