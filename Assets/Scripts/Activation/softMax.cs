@@ -7,7 +7,13 @@ public class softMax : Neuron {
 
     List<float> Expos = new List<float>();
     float scale = 0.0f;
-
+    public void finput(List<Neuron> Prev)
+    {
+        foreach (Neuron n in Prev)
+        {
+            this.inputList.Add(n.x);
+        }
+    }
     public override void operation()
     {
         if (inputList.Count == weightList.Count)

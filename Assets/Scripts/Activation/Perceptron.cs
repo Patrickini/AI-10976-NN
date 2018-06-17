@@ -35,6 +35,6 @@ public class Perceptron : Neuron {
     }
     public Perceptron(List<Neuron> Prev, List<float> W, float T, float B) : base(Prev, W, T, B)
     {
-
+        
     }
 }

@@ -73,25 +73,26 @@ public class NN : MonoBehaviour {
             dos[imgInput.IndexOf(n)].Layer = 2;
             dos[imgInput.IndexOf(n)].ID = count;
             dos[imgInput.IndexOf(n)].operation();
-            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            Report.WriteLine(dos[imgInput.IndexOf(n)].report());
             count++;
         }
         foreach (float n in imgInput)
         {
-            dos.Add(new Sigmoid(dos, initWeights, 0, Bias));
-            dos[imgInput.IndexOf(n)].Layer = 3;
-            dos[imgInput.IndexOf(n)].ID = count;
-            dos[imgInput.IndexOf(n)].operation();
-            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            tres.Add(new Sigmoid(dos, initWeights, 0, Bias));
+            tres[imgInput.IndexOf(n)].Layer = 3;
+            tres[imgInput.IndexOf(n)].ID = count;
+            tres[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(tres[imgInput.IndexOf(n)].report());
             count++;
         }
         foreach (float n in imgInput)
         {
-            dos.Add(new softMax(dos, initWeights, 0, Bias));
-            dos[imgInput.IndexOf(n)].Layer = 3;
-            dos[imgInput.IndexOf(n)].ID = count;
-            dos[imgInput.IndexOf(n)].operation();
-            Report.WriteLine(uno[imgInput.IndexOf(n)].report());
+            cuatro.Add(new softMax(tres, initWeights, 0, Bias));
+            cuatro[imgInput.IndexOf(n)].Layer = 4;
+            cuatro[imgInput.IndexOf(n)].ID = count;
+            //cuatro[imgInput.IndexOf(n)].inputList = cuatro[imgInput.IndexOf(n)].finput(tres);
+            cuatro[imgInput.IndexOf(n)].operation();
+            Report.WriteLine(cuatro[imgInput.IndexOf(n)].report());
             count++;
         }
 

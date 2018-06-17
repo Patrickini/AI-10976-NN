@@ -6,7 +6,7 @@ public class Neuron : NN {
 
     public int Layer;
     public float ID;
-    protected float x;
+    public float x;
     protected float w;
     protected float Treshold;
     protected float Output;
@@ -23,6 +23,13 @@ public class Neuron : NN {
     {
         //Debug.Log("[Layer]:" + this.Layer + "Operation Activated" + this.x);
         return ("[Layer]:" + this.Layer + "Operation Activated" + this.x);
+    }
+    public void finput(List<Neuron> Prev)
+    {
+        foreach (Neuron n in Prev)
+        {
+            this.inputList.Add(n.x);
+        }
     }
     public Neuron()
     {
