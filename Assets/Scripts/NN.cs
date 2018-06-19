@@ -8,7 +8,7 @@ using System.Globalization;
 public class NN : MonoBehaviour {
     [SerializeField] Sprite Img;
     protected float Bias = 1;
-    protected float Alpha;
+    protected float Alpha = 0.2f;
     Color[] colores;
     List<float> imgInput = new List<float>();
     List<float> initWeights = new List<float>();
@@ -17,6 +17,7 @@ public class NN : MonoBehaviour {
     StreamReader reader;
 
     int count = 0;
+    float globalOutput;
 
     List<Neuron> uno = new List<Neuron>();
     List<Neuron> dos = new List<Neuron>();
@@ -95,10 +96,26 @@ public class NN : MonoBehaviour {
             Report.WriteLine(cuatro[imgInput.IndexOf(n)].report());
             count++;
         }
-
-
-
+        Neuron finalNode = new Sigmoid(cuatro, initWeights,0, Bias);
+        finalNode.operation2();
+        globalOutput = finalNode.x;
+        Debug.Log("Output: " + finalNode.x);
         Report.Close();
-        AssetDatabase.RenameAsset(repPath,( "Report_" + System.DateTime.Now.ToUniversalTime() + ".txt"));
+
+        BackP bp = new BackP();
+        float OE = bp.FErrorD(25, 1.0f, globalOutput);
+        Debug.Log("Output Error: " + OE);
+        List<float> newWeights = new List<float>();
+
+        
+
+        for (int i = 0; i < 25; ++i)
+        {
+            newWeights[i] = bp.Weight(initWeights[i], Alpha, finalNode.x, finalNode.Output, finalNode.inputList[i], imgInput[i]);
+        }
+            
+
+        
+        //AssetDatabase.RenameAsset(repPath,( "Report_" + System.DateTime.Now.ToUniversalTime().ToString() + ".txt"));
     }
 }

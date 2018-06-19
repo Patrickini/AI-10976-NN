@@ -9,7 +9,7 @@ public class Neuron : NN {
     public float x;
     protected float w;
     protected float Treshold;
-    protected float Output;
+    public float Output;
     public List<float> inputList = new List<float>();
     public List<float> weightList = new List<float>();
 
@@ -19,6 +19,7 @@ public class Neuron : NN {
     }
 
     public virtual void operation(){}
+    public virtual void operation2() { }
     public virtual string report()
     {
         //Debug.Log("[Layer]:" + this.Layer + "Operation Activated" + this.x);
@@ -47,12 +48,13 @@ public class Neuron : NN {
     {
         foreach(Neuron n in Prev)
         {
-            this.inputList.Add(n.x);
+            //this.inputList.Add(n.x);
+            this.inputList.Add(n.Output);
         }
         this.weightList = W;
         this.Treshold = T;
         this.Bias = B;
-        Debug.Log("Constructor");
+        Debug.Log("Neuron List Constructor");
     }
     public Neuron(float X, float W)
     {

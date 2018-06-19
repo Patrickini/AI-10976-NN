@@ -7,29 +7,21 @@ public class softMax : Neuron {
 
     List<float> Expos = new List<float>();
     float scale = 0.0f;
-    public void finput(List<Neuron> Prev)
-    {
-        foreach (Neuron n in Prev)
-        {
-            this.inputList.Add(n.x);
-        }
-    }
+
     public override void operation()
     {
         if (inputList.Count == weightList.Count)
         {
-            foreach (float i in inputList)
+            for(int i = 0; i < inputList.Count; ++i)
             {
-
-                Expos[Expos.IndexOf(i)] = Mathf.Exp(i) + Mathf.Exp(weightList.IndexOf(i));
-                scale += Expos[Expos.IndexOf(i)];
+                scale += Mathf.Exp(inputList[i]) + Mathf.Exp(weightList[i]);
             }
-            foreach (float j in Expos)
-            {
-
-                Expos[Expos.IndexOf(j)] = j / scale;
-                
-            }
+            //for (int j = 0; j < inputList.Count; ++j)
+            //{
+            //    Expos[j] = Expos[j] / scale;
+            //}
+            x = Expos.Sum() / scale;
+            
         }
         else
         {
